@@ -14,6 +14,19 @@ const app = express();
 app.use(cors());
 const PORT = process.env.PORT || 5005;
 
+//npm install mongoose this will bring in mongoose
+const mongoose = require('mongoose');
+//go get our model for our data
+const Cat = require('./models/cats.js');
+//Make sure we can connect to mongo using mongoose
+mongoose.connect(process.env.DB_URL);
+
+//add validation to confirm we are wired up to our Mongo DB
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  console.log('Mongoose is connected');
+});
 
 
 app.get('/', (req, res) => {
@@ -22,7 +35,16 @@ app.get('/', (req, res) => {
 
 
 
+app.get('/cats', getCats);
 
+async function getCats(request, response, next){
+  try {
+    let catResults = await Cat.find();
+    response.status(200).send(catResults);
+  } catch (error) {
+    next(error);
+  }
+}
 
 
 
