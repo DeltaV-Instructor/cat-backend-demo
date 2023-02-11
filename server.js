@@ -7,18 +7,18 @@ const express = require('express');
 const cors = require('cors');
 
 // USE
-// implement express
+// implement express .get(), .use(), .post(), delete()
 const app = express();
 
 // middleware its like our bouncer....
 app.use(cors());
-
-
 const PORT = process.env.PORT || 5005;
 
 
 
-
+app.get('/', (req, res) => {
+  res.status(200).send('Hello from Saturdays!');
+});
 
 
 
