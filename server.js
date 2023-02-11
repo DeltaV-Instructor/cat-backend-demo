@@ -29,26 +29,22 @@ db.once('open', function () {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.get('/', (req, res) => {
   res.status(200).send('Hello from Saturdays!');
 });
 
 
 
+app.get('/cats', getCats);
 
+async function getCats(request, response, next){
+  try {
+    let catResults = await Cat.find();
+    response.status(200).send(catResults);
+  } catch (error) {
+    next(error);
+  }
+}
 
 
 
