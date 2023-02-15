@@ -39,10 +39,10 @@ app.get('/', (req, res) => {
   res.status(200).send('Hello from Server!');
 });
 
-
+// app.whateverMethod('/', callback())
 app.get('/cats', getCats);
 app.post('/cats', postCats);
-
+app.delete('/cats/:id', deleteCats);
 //We need to declare a path parameter, we need this to process our id
 //we will use a variable to capture that id
 // to create that variable we add ':' then variable name to our path('path variable')
@@ -67,7 +67,17 @@ async function postCats(request, response, next){
   }
 }
 
-
+async function deleteCats(request, response, next){
+  console.log('id', request.params.id);
+  // Model.findByIdAndDelete()
+  try {
+    let id = request.params.id;
+    await Cat.findByIdAndDelete(id);
+    response.status(200).send('Cat was ...');
+  } catch (error) {
+    
+  }
+}
 
 
 
