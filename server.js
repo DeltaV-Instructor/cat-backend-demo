@@ -1,6 +1,11 @@
 'use strict';
 console.log('SERVER UP!');
 
+// LAB 12 - FEATURED TASKS
+// Add a new route and handler function to your server, to respond to `POST` requests to `/books`. This is your book-creation end point. Verify it's working by sending a raw POST request via your REST Client.
+// Be sure to include server-side error checking, in case something goes wrong. Respond with appropriate status codes, if anything goes wrong. Verify with your REST Client.
+// Add a server end point to handle `DELETE` requests to `/books/:id`.
+
 // REQUIRE
 require('dotenv').config();
 const express = require('express');
@@ -30,12 +35,12 @@ db.once('open', function () {
 
 
 app.get('/', (req, res) => {
-  res.status(200).send('Hello from Saturdays!');
+  res.status(200).send('Hello from Server!');
 });
 
 
-
 app.get('/cats', getCats);
+app.post('/cats', postCats);
 
 async function getCats(request, response, next){
   try {
@@ -45,6 +50,15 @@ async function getCats(request, response, next){
     next(error);
   }
 }
+
+
+
+
+
+
+
+
+
 
 
 
