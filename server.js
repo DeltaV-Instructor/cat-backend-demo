@@ -17,6 +17,7 @@ const app = express();
 
 // middleware its like our bouncer....
 app.use(cors());
+app.use(express.json());
 const PORT = process.env.PORT || 5005;
 
 //npm install mongoose this will bring in mongoose
@@ -38,9 +39,13 @@ app.get('/', (req, res) => {
   res.status(200).send('Hello from Server!');
 });
 
-
+// app.whateverMethod('/', callback())
 app.get('/cats', getCats);
 app.post('/cats', postCats);
+app.delete('/cats/:id', deleteCats);
+//We need to declare a path parameter, we need this to process our id
+//we will use a variable to capture that id
+// to create that variable we add ':' then variable name to our path('path variable')
 
 async function getCats(request, response, next){
   try {
@@ -52,9 +57,27 @@ async function getCats(request, response, next){
 }
 
 
+async function postCats(request, response, next){
+  console.log('coming in on: ',request.body);
+  try {
+    let createCat = await Cat.create(request.body);
+    response.status(200).send(createCat);
+  } catch (error) {
+    next(error);
+  }
+}
 
-
-
+async function deleteCats(request, response, next){
+  console.log('id', request.params.id);
+  // Model.findByIdAndDelete()
+  try {
+    let id = request.params.id;
+    await Cat.findByIdAndDelete(id);
+    response.status(200).send('Cat was ...');
+  } catch (error) {
+    
+  }
+}
 
 
 
