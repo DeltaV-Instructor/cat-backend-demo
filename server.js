@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
 app.get('/cats', getCats);
 app.post('/cats', postCats);
 app.delete('/cats/:id', deleteCats);
+app.put('/cats/:id', updateCats);
 
 
 async function getCats(request, response, next){
@@ -64,7 +65,16 @@ async function deleteCats(request, response, next){
 
 
 
-
+async function updateCats(request, response, next){
+  console.log('id', request.params.id);
+  try {
+    let id = request.params.id;
+    await Cat.findByIdAndUpdate(id);
+    response.status(200).send('Cat was ...');
+  } catch (error) {
+    next(error);
+  }
+}
 
 
 
