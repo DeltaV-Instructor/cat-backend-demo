@@ -75,8 +75,18 @@ async function updateCats(request, response, next){
     //1. id of the thing to update
     //2. update data object 
     //3. Options object, makes it a put not patch (update whole cat)
-    let updatedCat = await Cat.findByIdAndUpdate(id, data, {new: true, overwrite: true});
+    let updatedCat = await Cat.findByIdAndUpdate(id, catData, {new: true, overwrite: true});
     response.status(200).send(updatedCat);
+    //test request http://localhost:3002/cats/id
+    //then add the cat body
+    // {
+    //   "_id": "63ec4be2660cd0bd0fe1857c",
+    //   "name": "CookieMonster",
+    //   "color": "blue",
+    //   "spayNeuter": true,
+    //   "location": "the streets",
+    //   "__v": 0
+    // }
   } catch (error) {
     next(error);
   }
