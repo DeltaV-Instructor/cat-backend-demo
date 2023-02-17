@@ -68,9 +68,15 @@ async function deleteCats(request, response, next){
 async function updateCats(request, response, next){
   console.log('id', request.params.id);
   try {
+    //update data lives in the body of the request object
     let id = request.params.id;
-    await Cat.findByIdAndUpdate(id);
-    response.status(200).send('Cat was ...');
+    let catData = request.body;
+    //findByIdAndUpdate() method takes in 3 arguments
+    //1. id of the thing to update
+    //2. update data object 
+    //3. Options object, makes it a put not patch (update whole cat)
+    let updatedCat = await Cat.findByIdAndUpdate(id, data, {new: true, overwrite: true});
+    response.status(200).send(updatedCat);
   } catch (error) {
     next(error);
   }
